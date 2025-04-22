@@ -1,19 +1,31 @@
 # 🚀 HDSPractica - Práctica 1
 
-**Asignatura:** Herramientas de Desarrollo de Software  
-**Tema:** Configuración básica de un entorno de desarrollo con Node.js, Express y Vite
+**Materia:** Herramientas de Desarrollo de Software  
+**Autor:** Yepez Jair  
+**Proyecto:** Configuración de entorno completo con Node.js (Backend) y Vite (Frontend)
+
+---
+
+## 🧠 Objetivo de la práctica
+
+El propósito de esta práctica es aprender a configurar un entorno de desarrollo moderno que integre:
+- Un servidor backend con **Node.js** y **Express**.
+- Un cliente frontend con **Vite** utilizando **JavaScript Vanilla**.
+
+Se trabajará tanto en el desarrollo del servidor como en la interfaz del usuario, utilizando tecnologías actuales para el desarrollo web.
 
 ---
 
 ## 📦 Backend con Node.js y Express
 
-### Herramientas utilizadas:
-- **Node.js**: Entorno de ejecución JavaScript
-- **npm**: Gestor de paquetes de Node
-- **Express.js**: Framework minimalista para aplicaciones web
+### 🛠️ Herramientas utilizadas:
+- **Node.js** – Entorno de ejecución de JavaScript en el servidor.
+- **npm** – Gestor de paquetes para instalar librerías.
+- **Express.js** – Framework minimalista para crear APIs REST.
 
-### Pasos:
+### 🔧 Pasos para configurar el backend:
 
-1. **Inicializar el proyecto**
+1. **Crear la carpeta del proyecto:**
    ```bash
-   npm init
+   mkdir Backend
+   cd Backend
