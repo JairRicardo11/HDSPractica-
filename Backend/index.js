@@ -61,7 +61,7 @@ server.get('/libros/:id', (req, res) => {
 
 // 🔁 NUEVO: Ruta /ping para pruebas desde el frontend
 server.get('/ping', (req, res) => {
-    res.send('PONGSS');
+    res.send('PONG desde el servidor de Jair Yepez');
 });
 
 // Actualizar un libro existente

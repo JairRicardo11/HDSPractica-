@@ -9,7 +9,7 @@ function getPingFromWebService() {
   fetch(url)
     .then((response) => response.text()) // convertimos a texto
     .then((data) => {
-      console.log("Respuesta del servidor:", data);
+      console.log("Respuesta del servidor Jair Yepez:", data);
       messageDiv.textContent = data; // mostramos en el div con id="message"
     })
     .catch((error) => {
