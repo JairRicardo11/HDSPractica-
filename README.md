@@ -29,3 +29,9 @@ Se trabajará tanto en el desarrollo del servidor como en la interfaz del usuari
    ```bash
    mkdir Backend
    cd Backend
+
+2. **Inicializar el proyecto de Node.js**
+   npm init -y
+
+3. **Instalar Express:**
+    npm install express
