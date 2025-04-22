@@ -1,0 +1,14 @@
+{
+  "name": "libros",
+  "version": "1.0.0",
+  "description": "Esta es la segunda practica H.D.S.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Estevan Usuay",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
