@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Backend:/app
+    restart: always
+
+  frontend:
+    build: ./Frontend\HDSPRACTICA-
+    ports:
+      - "8080:80"
+    restart: always
