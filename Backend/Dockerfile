@@ -11,3 +11,4 @@ COPY index.js .
 EXPOSE 3030
 
 CMD [ "node", "index.js" ]
+    
