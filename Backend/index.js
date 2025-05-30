@@ -1,133 +1,71 @@
 const express = require('express');
-const cors = require('cors');
-
 const app = express();
 const PORT = 3030;
 
-app.use(cors());
-app.use(express.json()); // Permite recibir JSON en POST
+app.use(express.json());
 
-// Ruta de prueba GET
-app.get('/ping', (req, res) => {
-  res.json({ message: 'Pong desde el servidor - Yepez Jair' });
+let libros = [
+  { id: 1, titulo: 'Cien años de soledad', autor: 'Gabriel García Márquez' },
+  { id: 2, titulo: '1984', autor: 'George Orwell' }
+];
+
+// GET /libros - Lista todos los libros o filtra por autor
+app.get('/libros', (req, res) => {
+  const autor = req.query.autor;
+  if (autor) {
+    const filtrados = libros.filter(libro =>
+      libro.autor.toLowerCase().includes(autor.toLowerCase())
+    );
+    return res.json(filtrados);
+  }
+  res.json(libros);
 });
 
-// Ruta de prueba POST
-app.post('/ping', (req, res) => {
-  console.log('POST recibido:', req.body); // Muestra en consola del servidor
-  res.json({ message: 'Pong desde el servidor - Yepez Jair' });
+// GET /libros/:id - Obtener libro por ID
+app.get('/libros/:id', (req, res) => {
+  const libro = libros.find(l => l.id === parseInt(req.params.id));
+  if (!libro) return res.status(404).send('Libro no encontrado');
+  res.json(libro);
 });
 
-// Ruta principal GET con HTML visual + formulario POST
-app.get('/', (req, res) => {
-  const html = `
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-      <meta charset="UTF-8">
-      <title>Servidor Node.js</title>
-      <style>
-        body {
-          background: #f0f4f8;
-          font-family: 'Segoe UI', sans-serif;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          margin: 0;
-        }
-        .card {
-          background: white;
-          padding: 40px;
-          border-radius: 16px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          text-align: center;
-          color: #0d2d62;
-          width: 400px;
-        }
-        h1 {
-          margin-bottom: 10px;
-        }
-        p {
-          font-size: 18px;
-          color: #367fa9;
-        }
-        form {
-          margin-top: 20px;
-        }
-        input, button {
-          padding: 10px;
-          margin-top: 10px;
-          border-radius: 8px;
-          border: 1px solid #ccc;
-          width: 100%;
-        }
-        button {
-          background-color: #3c8dbc;
-          color: white;
-          border: none;
-          cursor: pointer;
-        }
-        #respuesta {
-          margin-top: 20px;
-          color: green;
-          font-weight: bold;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="card">
-        <h1>¡Hola Mundo!</h1>
-        <p>Servidor corriendo con Node.js y Express</p>
-        <p><strong>Desarrollado por: Yepez Jair</strong></p>
+// POST /libros - Crear un nuevo libro
+app.post('/libros', (req, res) => {
+  const { titulo, autor } = req.body;
+  if (!titulo || !autor) {
+    return res.status(400).send('Faltan campos: título y autor son obligatorios');
+  }
 
-        <form id="formulario">
-          <input type="text" id="mensaje" placeholder="Escribe un mensaje..." required />
-          <button type="submit">Enviar POST a /ping</button>
-        </form>
-        <div id="respuesta"></div>
-      </div>
-
-      <script>
-        const formulario = document.getElementById('formulario');
-        const respuesta = document.getElementById('respuesta');
-
-        formulario.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          const mensaje = document.getElementById('mensaje').value;
-
-          fetch('/ping', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ mensaje })
-          })
-          .then(res => res.json())
-          .then(data => {
-            console.log('Respuesta del servidor:', data);
-            respuesta.innerText = data.message;
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            respuesta.innerText = 'Hubo un error al enviar el POST.';
-          });
-        });
-      </script>
-    </body>
-    </html>
-  `;
-  res.send(html);
+  const nuevoLibro = {
+    id: libros.length ? libros[libros.length - 1].id + 1 : 1,
+    titulo,
+    autor
+  };
+  libros.push(nuevoLibro);
+  res.status(201).json(nuevoLibro);
 });
 
-// Ruta principal POST (puedes dejarla así o quitarla si no se usa)
-app.post('/', (req, res) => {
-  res.send('¡Hola Mundo con Node.js y Express (POST)!');
+// PUT /libros/:id - Actualizar libro
+app.put('/libros/:id', (req, res) => {
+  const libro = libros.find(l => l.id === parseInt(req.params.id));
+  if (!libro) return res.status(404).send('Libro no encontrado');
+
+  const { titulo, autor } = req.body;
+  if (titulo) libro.titulo = titulo;
+  if (autor) libro.autor = autor;
+
+  res.json(libro);
 });
 
-// Inicia el servidor
+// DELETE /libros/:id - Eliminar libro
+app.delete('/libros/:id', (req, res) => {
+  const index = libros.findIndex(l => l.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).send('Libro no encontrado');
+
+  const eliminado = libros.splice(index, 1);
+  res.json(eliminado[0]);
+});
+
+// Inicia el servidor en puerto 3030
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
