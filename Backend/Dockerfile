@@ -1,22 +1,4 @@
-from node:20.10.0-alpine3.18
-
-WORKDIR /app
-
-COPY package.json .
-
-RUN npm i
-
-COPY index.js .
-
-EXPOSE 3030
-
-CMD [ "node", "index.js" ]
-    
-
-
-
-
-
+# Backend/Dockerfile
 FROM node:18
 
 WORKDIR /app
@@ -26,6 +8,5 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3030
-
-CMD ["npm", "start"]
+EXPOSE 3000
+CMD ["node", "index.js"]
