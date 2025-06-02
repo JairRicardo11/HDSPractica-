@@ -106,17 +106,24 @@ server.put('/libros/:id', (req, res) => {
 // Eliminar un libro por su ID
 server.delete('/libros/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const index = libros.findIndex(l => l.id === id);
 
-    // Si no se encuentra el libro, responder con error 404
-    if (index === -1) {
+    // Buscar el libro por ID
+    const libroAEliminar = libros.find(l => l.id === id);
+
+    // Validar existencia
+    if (!libroAEliminar) {
         return res.status(404).json({ mensaje: 'No fue posible eliminar el libro: ID no encontrado.' });
     }
 
-    // Eliminar el libro del array
-    const libroEliminado = libros.splice(index, 1);
-    res.json({ mensaje: 'El libro ha sido eliminado exitosamente.', libro: libroEliminado[0] });
+    // Filtrar para eliminarlo
+    libros = libros.filter(l => l.id !== id);
+
+    res.json({
+        mensaje: 'El libro ha sido eliminado exitosamente.',
+        libro: libroAEliminar
+    });
 });
+
 
 // Iniciar el servidor y escuchar en el puerto especificado
 server.listen(PORT, () => {
