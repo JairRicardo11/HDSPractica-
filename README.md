@@ -1,275 +1,223 @@
-# API REST de Libros en Node.js con Express
+# 📘 API REST - Sistema de Gestión de Prácticas
 
-Este proyecto es un servicio web RESTful desarrollado con **Node.js** y **Express** para gestionar una colección de libros. Permite **crear**, **leer**, **actualizar** y **eliminar** libros, además de **filtrar libros por autor**.
-
----
-
-## URL base de la API
-
-La API está desplegada y accesible desde:
-
-```
-http://3.133.95.14:3000
-```
+Este proyecto implementa una API RESTful utilizando **Node.js** y **Express**, diseñada para gestionar registros de libros, específicamente comenzando con el título **"Sistema de gestión de prácticas"** del autor **José Luis Narváez**.  
+Permite realizar operaciones **CRUD**: crear, consultar, actualizar y eliminar, además de **filtrar por autor**.
 
 ---
 
-## Endpoints disponibles
+## 🌐 URL base de la API
 
-| Método | Endpoint                        | Descripción                         |
-|--------|----------------------------------|-------------------------------------|
-| GET    | `/libros`                        | Obtener todos los libros            |
-| GET    | `/libros?autor=<nombre>`         | Filtrar libros por autor            |
-| GET    | `/libros/:id`                    | Obtener un libro por su ID          |
-| POST   | `/libros`                        | Crear un nuevo libro                |
-| PUT    | `/libros/:id`                    | Actualizar un libro por su ID       |
-| DELETE | `/libros/:id`                    | Eliminar un libro por su ID         |
+```
+http://3.145.217.96:3030
+```
 
 ---
 
-## Explicación detallada de los endpoints
+## 🔁 Endpoints disponibles
 
-### `GET /libros`
+| Método | Ruta                           | Función                               |
+|--------|--------------------------------|----------------------------------------|
+| GET    | `/libros`                      | Recupera todos los libros              |
+| GET    | `/libros?autor=<nombre>`       | Busca libros por autor                 |
+| GET    | `/libros/:id`                  | Muestra un libro específico            |
+| POST   | `/libros`                      | Registra un nuevo libro                |
+| PUT    | `/libros/:id`                  | Modifica un libro existente            |
+| DELETE | `/libros/:id`                  | Elimina un libro por ID                |
 
-Devuelve una lista de todos los libros.
+---
 
-- Sin parámetros: lista completa.
-- Con `?autor=nombre`: filtra por autor (no distingue mayúsculas o minúsculas).
+## 🧪 Detalle de Endpoints
 
-**Ejemplo sin filtro:**  
+### 🔍 `GET /libros`
+
+Devuelve una lista de todos los libros registrados.
+
+**Filtrado por autor (opcional):**
 ```
-GET http://3.133.95.14:3000/libros
+GET /libros?autor=narvaez
 ```
 
-**Respuesta:**
+**Respuesta esperada:**
 ```json
 [
-  { "id": 1, "titulo": "Cien Años de Soledad", "autor": "Gabriel García Márquez" },
-  { "id": 2, "titulo": "Don Quijote de la Mancha", "autor": "Miguel de Cervantes" }
+  { "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "José Luis Narváez" }
 ]
 ```
 
-**Ejemplo con filtro:**  
-```
-GET http://3.133.95.14:3000/libros?autor=Gabriel
-```
-
-**Respuesta (si hay coincidencias):**
-```json
-[
-  { "id": 1, "titulo": "Cien Años de Soledad", "autor": "Gabriel García Márquez" }
-]
-```
-
-**Respuesta (si no hay coincidencias):**
-```json
-{ "mensaje": "No se encontraron libros del autor \"Gabriel\"" }
-```
-
 ---
 
-### `GET /libros/:id`
+### 🔎 `GET /libros/:id`
 
-Obtiene un libro por su ID.
+Consulta un libro específico mediante su ID.
 
 **Ejemplo:**
 ```
-GET http://3.133.95.14:3000/libros/1
+GET /libros/1
 ```
 
 **Respuesta:**
 ```json
-{ "id": 1, "titulo": "Cien Años de Soledad", "autor": "Gabriel García Márquez" }
+{ "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "José Luis Narváez" }
 ```
 
-**Si no existe:**
+**Error si no existe:**
 ```json
-{ "mensaje": "Libro no encontrado" }
+{ "mensaje": "No encontramos ningún libro con ese ID." }
 ```
 
 ---
 
-### `POST /libros`
+### ➕ `POST /libros`
 
-Crea un nuevo libro. Se debe enviar un objeto JSON con `titulo` y `autor`.
+Agrega un nuevo libro. Se deben proporcionar `titulo` y `autor`.
 
-**Ejemplo:**
+**Cuerpo del request:**
 ```json
-{ "titulo": "Rayuela", "autor": "Julio Cortázar" }
+{ "titulo": "Nuevo Libro", "autor": "Nuevo Autor" }
 ```
 
 **Respuesta:**
 ```json
-{ "id": 3, "titulo": "Rayuela", "autor": "Julio Cortázar" }
+{ "id": 2, "titulo": "Nuevo Libro", "autor": "Nuevo Autor" }
 ```
-
-**Validación:** Si falta título o autor, devuelve 400.
 
 ---
 
-### `PUT /libros/:id`
+### 🛠 `PUT /libros/:id`
 
-Actualiza un libro existente.
+Actualiza los datos de un libro existente.
 
-**Ejemplo:**
+**Cuerpo del request:**
 ```json
-{ "titulo": "Rayuela (Edición Revisada)", "autor": "Julio Cortázar" }
+{ "titulo": "Sistema actualizado", "autor": "José Luis Narváez" }
 ```
 
 **Respuesta:**
 ```json
-{ "id": 3, "titulo": "Rayuela (Edición Revisada)", "autor": "Julio Cortázar" }
+{ "id": 1, "titulo": "Sistema actualizado", "autor": "José Luis Narváez" }
 ```
-
-**Errores posibles:**  
-- Si no existe el libro: 404.  
-- Si faltan campos: 400.
 
 ---
 
-### `DELETE /libros/:id`
+### ❌ `DELETE /libros/:id`
 
-Elimina un libro por ID.
+Elimina un libro según su identificador.
 
 **Ejemplo:**
 ```
-DELETE http://3.133.95.14:3000/libros/3
+DELETE /libros/1
 ```
 
 **Respuesta:**
 ```json
 {
-  "mensaje": "Libro eliminado correctamente",
+  "mensaje": "El libro ha sido eliminado exitosamente.",
   "libro": {
-    "id": 3,
-    "titulo": "Rayuela (Edición Revisada)",
-    "autor": "Julio Cortázar"
+    "id": 1,
+    "titulo": "Sistema de gestión de prácticas",
+    "autor": "José Luis Narváez"
   }
 }
 ```
 
-**Si no existe:**
-```json
-{ "mensaje": "No se puede eliminar: libro no encontrado" }
-```
-
 ---
 
-## Instalación de Docker en Ubuntu
+## 🐳 Instalación de Docker (Ubuntu)
 
 ```bash
-# 1. Actualizar el índice de paquetes
 sudo apt update
-
-# 2. Instalar dependencias necesarias
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
-
-# 3. Agregar la clave GPG oficial de Docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-# 4. Añadir el repositorio de Docker
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-
-# 5. Verificar la versión de Docker disponible
 apt-cache policy docker-ce
-
-# 6. Instalar Docker
 sudo apt install docker-ce
-
-# 7. Verificar que Docker esté funcionando
 sudo systemctl status docker
 ```
 
-### ¿Qué hace cada comando?
-- `apt update`: actualiza la lista de paquetes.
-- `apt install ...`: instala dependencias necesarias para usar HTTPS y manejar repositorios.
-- `curl -fsSL ... | apt-key add -`: descarga y agrega la clave de confianza de Docker.
-- `add-apt-repository`: registra el repositorio oficial de Docker.
-- `apt-cache policy`: muestra qué versiones están disponibles.
-- `systemctl status docker`: verifica si Docker está activo.
-
 ---
 
-## Dockerfile 
+## 🛠 Dockerfile del Proyecto
 
-```dockerfile
-FROM node:20.10.0-alpine3.18     # Imagen base ligera con Node.js
-WORKDIR /app                    # Directorio de trabajo en el contenedor
-COPY package.json .            # Copia las dependencias
-RUN npm i                      # Instala las dependencias
-COPY index.js .                # Copia el archivo principal
-EXPOSE 3000                    # Expone el puerto 3000 para la API
-CMD ["node", "index.js"]       # Comando que inicia la app
+```Dockerfile
+FROM node:20.10.0-alpine3.18
+WORKDIR /app
+COPY package.json .
+RUN npm i
+COPY index.js .
+EXPOSE 3000
+CMD ["node", "index.js"]
 ```
 
 ---
 
-## Crear imagen y contenedor con Docker
+## 🚀 Instrucciones para Docker
 
 ```bash
-# 1. Construir imagen
-sudo docker build -t node-hello .
+# Construir imagen
+sudo docker build -t sistema-practicas .
 
-# 2. Ejecutar contenedor
-sudo docker run -d -p 3000:3000 --name hello --restart on-failure node-hello:latest
+# Ejecutar contenedor
+sudo docker run -d -p 3000:3000 --name practicas --restart on-failure sistema-practicas:latest
 ```
 
-### Explicación de parámetros
-- `-t node-hello`: etiqueta la imagen con ese nombre.
-- `-d`: ejecuta en segundo plano.
-- `-p 3000:3000`: enlaza el puerto local al del contenedor.
-- `--name hello`: nombre del contenedor.
-- `--restart on-failure`: reinicia automáticamente si falla.
+**Parámetros importantes:**
+- `-t sistema-practicas`: nombre de la imagen.
+- `--name practicas`: nombre del contenedor.
+- `--restart on-failure`: reinicia el contenedor si ocurre un fallo.
 
 ---
 
+## 🧪 PRÁCTICA 1 – Herramientas de Desarrollo de Software
 
+### 📦 npm – Gestor de Paquetes
 
+- Utiliza `npm` para manejar dependencias en proyectos Node.js.
+- Comando inicial:
+  ```bash
+  npm init
+  ```
 
+### 📁 Archivo Principal
 
+1. Crear archivo `index.js`.
+2. Colocar el código principal de la API.
+3. Ejecutar:
+   ```bash
+   node index.js
+   ```
 
+### ⚙️ Express.js
 
+- Instalar:
+  ```bash
+  npm i express
+  ```
+- Express permite manejar rutas y levantar el servidor HTTP con facilidad.
 
+---
 
+## 🎨 Frontend con Vite (opcional)
 
-# PRÁCTICA 1 – HERRAMIENTAS DE DESARROLLO DE SOFTWARE
+Para generar un frontend liviano:
 
-# npm – Gestor de paquetes de Node.js
+```bash
+npm create vite@latest
+```
 
-    - npm es el sistema de gestión de paquetes de Node.js. 
-    
-    - Permite instalar, compartir y administrar dependencias de proyectos JavaScript.
+- Ingresar nombre del proyecto
+- Seleccionar framework (ej. Vanilla)
+- Elegir variante (ej. JavaScript)
 
-    - El comando npm init crea un nuevo proyecto de Node.js. Al ejecutarlo, solicita información como el nombre del proyecto, versión, descripción, punto de entrada, etc.
+Luego:
 
-Creación del archivo principal
+```bash
+cd nombre-proyecto
+npm install
+npm run dev
+```
 
-    - Crear un archivo llamado index.js.
+---
 
-    - Escribir en ese archivo el código que se desea ejecutar.
-
-    - Para ejecutar el proyecto, usar el comando node index.js.
-
-# Express.js
-
-    El comando npm i express instala el framework Express. Express permite crear servidores y gestionar rutas de manera sencilla en aplicaciones Node.js.
-
-# Frontend – Proyecto con Vite
-
-Para crear un nuevo proyecto con Vite, usar el comando npm create vite@latest.
-
-El sistema pedirá los siguientes datos:
-
-    - Nombre del proyecto (Project name)
-
-    - Seleccionar un framework (por ejemplo, Vanilla)
-
-    - Seleccionar una variante (por ejemplo, JavaScript)
-
-Una vez finalizada la configuración:
-
-    - Acceder al directorio del proyecto con cd vite-project
-
-    - Instalar las dependencias con npm install
-
-    - Ejecutar el servidor de desarrollo con  npm run dev
+**Autor del proyecto:**  
+📘 *José Luis Narváez*  
+📅 *2025 - Desarrollo de API RESTful para gestión de prácticas*
