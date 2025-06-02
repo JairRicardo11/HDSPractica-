@@ -3,7 +3,7 @@ const express = require('express');
 const server = express();
 
 // Puerto donde se ejecutará el servidor
-const PORT = 3000;
+const PORT = 3030;
 
 // Middleware para poder leer datos en formato JSON
 server.use(express.json());
