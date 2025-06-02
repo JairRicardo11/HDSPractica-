@@ -10,8 +10,16 @@ server.use(express.json());
 
 // Array de Libros
 let libros = [
-    { id: 1, titulo: 'Cien Años de Soledad', autor: 'Gabriel García Márquez' },
-    { id: 2, titulo: 'Don Quijote de la Mancha', autor: 'Miguel de Cervantes' }
+    { id: 1, titulo: 'La sombra del viento', autor: 'Carlos Ruiz Zafón' },
+    { id: 2, titulo: 'El nombre del viento', autor: 'Patrick Rothfuss' },
+    { id: 3, titulo: 'Los hombres me explican cosas', autor: 'Rebecca Solnit' },
+    { id: 4, titulo: 'La tregua', autor: 'Mario Benedetti' },
+    { id: 5, titulo: 'El arte de la guerra', autor: 'Sun Tzu' },
+    { id: 6, titulo: 'Rayuela', autor: 'Julio Cortázar' },
+    { id: 7, titulo: 'El código Da Vinci', autor: 'Dan Brown' },
+    { id: 8, titulo: 'Sapiens: De animales a dioses', autor: 'Yuval Noah Harari' },
+    { id: 9, titulo: 'Fahrenheit 451', autor: 'Ray Bradbury' },
+    { id: 10, titulo: 'Crónica de una muerte anunciada', autor: 'Gabriel García Márquez' }
 ];
 
 // Ruta principal (mensaje de bienvenida)
