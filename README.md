@@ -1,6 +1,6 @@
 # 📘 API REST - Sistema de Gestión de Prácticas
 
-Este proyecto implementa una API RESTful utilizando **Node.js** y **Express**, diseñada para gestionar registros de libros, específicamente comenzando con el título **"Sistema de gestión de prácticas"** del autor **José Luis Narváez**.  
+Este proyecto implementa una API RESTful utilizando **Node.js** y **Express**, diseñada para gestionar registros de libros, específicamente comenzando con el título **"Sistema de gestión de prácticas"** del autor **Yepez Montenegro Jair Ricardo**.  
 Permite realizar operaciones **CRUD**: crear, consultar, actualizar y eliminar, además de **filtrar por autor**.
 
 ---
@@ -40,7 +40,7 @@ GET /libros?autor=narvaez
 **Respuesta esperada:**
 ```json
 [
-  { "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "José Luis Narváez" }
+  { "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "Yepez Montenegro Jair Ricardo" }
 ]
 ```
 
@@ -57,7 +57,7 @@ GET /libros/1
 
 **Respuesta:**
 ```json
-{ "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "José Luis Narváez" }
+{ "id": 1, "titulo": "Sistema de gestión de prácticas", "autor": "Yepez Montenegro Jair Ricardo" }
 ```
 
 **Error si no existe:**
@@ -89,12 +89,12 @@ Actualiza los datos de un libro existente.
 
 **Cuerpo del request:**
 ```json
-{ "titulo": "Sistema actualizado", "autor": "José Luis Narváez" }
+{ "titulo": "Sistema actualizado", "autor": "Yepez Montenegro Jair Ricardo" }
 ```
 
 **Respuesta:**
 ```json
-{ "id": 1, "titulo": "Sistema actualizado", "autor": "José Luis Narváez" }
+{ "id": 1, "titulo": "Sistema actualizado", "autor": "Yepez Montenegro Jair Ricardo" }
 ```
 
 ---
@@ -115,7 +115,7 @@ DELETE /libros/1
   "libro": {
     "id": 1,
     "titulo": "Sistema de gestión de prácticas",
-    "autor": "José Luis Narváez"
+    "autor": "Yepez Montenegro Jair Ricardo"
   }
 }
 ```
@@ -219,5 +219,5 @@ npm run dev
 ---
 
 **Autor del proyecto:**  
-📘 *José Luis Narváez*  
+📘 *Yepez Montenegro Jair Ricardo*  
 📅 *2025 - Desarrollo de API RESTful para gestión de prácticas*
