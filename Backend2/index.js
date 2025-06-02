@@ -24,7 +24,7 @@ let libros = [
 
 // Ruta principal (mensaje de bienvenida)
 server.get('/', (req, res) => {
-    res.send('API REST de libros en Node.js con Express');
+    res.send('Bienvenido a la API de gestión de libros 📚');
 });
 
 // Crear un nuevo libro
@@ -33,7 +33,7 @@ server.post('/libros', (req, res) => {
 
     // Validación de campos obligatorios
     if (!titulo || !autor) {
-        return res.status(400).json({ mensaje: 'El título y el autor son obligatorios' });
+        return res.status(400).json({ mensaje: 'Faltan datos: se requiere tanto el título como el autor.' });
     }
 
     // Crear nuevo objeto libro con ID incremental
@@ -58,7 +58,7 @@ server.get('/libros', (req, res) => {
 
         // Si no se encuentra ningún libro que coincida
         if (librosFiltrados.length === 0) {
-            return res.status(404).json({ mensaje: `No se encontraron libros del autor "${autor}"` });
+            return res.status(404).json({ mensaje: `No hay coincidencias con el autor "${autor}".` });
         }
 
         return res.json(librosFiltrados);
@@ -68,7 +68,6 @@ server.get('/libros', (req, res) => {
     res.json(libros);
 });
 
-
 // Obtener un libro por su ID
 server.get('/libros/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -76,7 +75,7 @@ server.get('/libros/:id', (req, res) => {
 
     // Si no se encuentra el libro, responder con error 404
     if (!libro) {
-        return res.status(404).json({ mensaje: 'Libro no encontrado' });
+        return res.status(404).json({ mensaje: 'No encontramos ningún libro con ese ID.' });
     }
 
     res.json(libro);
@@ -91,12 +90,12 @@ server.put('/libros/:id', (req, res) => {
 
     // Si no se encuentra el libro, responder con error 404
     if (index === -1) {
-        return res.status(404).json({ mensaje: 'No se puede actualizar: libro no encontrado' });
+        return res.status(404).json({ mensaje: 'Actualización fallida: libro no localizado.' });
     }
 
     // Validación de campos obligatorios
     if (!titulo || !autor) {
-        return res.status(400).json({ mensaje: 'El título y el autor son obligatorios para actualizar' });
+        return res.status(400).json({ mensaje: 'Para actualizar, proporciona el título y el autor correctamente.' });
     }
 
     // Actualizar los datos del libro
@@ -111,12 +110,12 @@ server.delete('/libros/:id', (req, res) => {
 
     // Si no se encuentra el libro, responder con error 404
     if (index === -1) {
-        return res.status(404).json({ mensaje: 'No se puede eliminar: libro no encontrado' });
+        return res.status(404).json({ mensaje: 'No fue posible eliminar el libro: ID no encontrado.' });
     }
 
     // Eliminar el libro del array
     const libroEliminado = libros.splice(index, 1);
-    res.json({ mensaje: 'Libro eliminado correctamente', libro: libroEliminado[0] });
+    res.json({ mensaje: 'El libro ha sido eliminado exitosamente.', libro: libroEliminado[0] });
 });
 
 // Iniciar el servidor y escuchar en el puerto especificado
